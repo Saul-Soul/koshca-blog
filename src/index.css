@@ -1,0 +1,280 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Color Palette - Atmosphere */
+  --bg-deep: #0a0a0b;
+  --bg-secondary: #121214;
+  --bg-surface: #1a1a1c;
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-base: #0ea5e9;
+  --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #2dd4bf 100%);
+  --accent-soft: rgba(14, 165, 233, 0.1);
+
+  --border-hairline: rgba(255, 255, 255, 0.04);
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* Typography - Adaptive */
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Spacing - Responsive & Proportional */
+  --space-unit: clamp(4px, 0.5vw + 2px, 6px);
+  /* Scaled down for tighter balance */
+  --spacer-1: calc(var(--space-unit) * 1);
+  --spacer-2: calc(var(--space-unit) * 2);
+  --spacer-4: calc(var(--space-unit) * 4);
+  --spacer-6: calc(var(--space-unit) * 6);
+  --spacer-8: calc(var(--space-unit) * 8);
+  --spacer-12: calc(var(--space-unit) * 12);
+  --spacer-16: calc(var(--space-unit) * 16);
+  --spacer-20: calc(var(--space-unit) * 20);
+  --spacer-24: calc(var(--space-unit) * 24);
+
+  /* Navbar height constant for layout clearing */
+  --nav-height: clamp(60px, 10vw, 80px);
+
+  /* Transitions - Mathematical Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --transition-steady: all 0.8s var(--ease-out-expo);
+  --transition-dynamic: all 0.5s var(--ease-out-expo);
+  --transition-fast: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Border Radii - Golden Spiral Progression (8, 13, 21, 34) */
+  --radius-sm: 8px;
+  --radius-md: 13px;
+  --radius-lg: 21px;
+  --radius-xl: 34px;
+
+  --container-max: 1200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(14px, 0.5vw + 12px, 16px);
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.heading-hero {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+}
+
+.heading-section {
+  font-size: clamp(1.8rem, 5vw, 4rem);
+}
+
+.text-elegant {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+.divider {
+  height: 1px;
+  background: var(--border-hairline);
+  width: 100%;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Utilities */
+.mb-1 {
+  margin-bottom: var(--spacer-1);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacer-2);
+}
+
+.mb-4 {
+  margin-bottom: var(--spacer-4);
+}
+
+.mb-8 {
+  margin-bottom: var(--spacer-8);
+}
+
+.mb-12 {
+  margin-bottom: var(--spacer-12);
+}
+
+/* 
+   Scroll-Triggered Reveal System
+   Cards enter from different directions based on grid position.
+*/
+
+/* 
+   Artistic Timeline Reveal System
+   Growth-based entry with refined blur and scale
+*/
+/* 
+   Artistic Gallery Reveal System
+   Handled via GalleryTimeline component for precision.
+*/
+
+/* Gallery card entrance: starts invisible, scroll-active triggers reveal */
+.timeline-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(8px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.6s ease;
+  will-change: opacity, transform, filter;
+}
+
+.timeline-reveal.scroll-active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Base scroll reveal for other elements (remains stable) */
+.scroll-reveal-card {
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(30px);
+  transition: all 1s var(--ease-out-expo);
+}
+
+.scroll-reveal-card.scroll-active {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Responsive adjustments for mobile */
+@media screen and (max-width: 768px) {
+  .scroll-reveal-card:nth-child(3n + 1) {
+    transform: translate(-100px, 0) scale(0.8);
+  }
+
+  .scroll-reveal-card:nth-child(3n + 2) {
+    transform: translate(0, 100px) scale(0.8);
+  }
+
+  .scroll-reveal-card:nth-child(3n + 3) {
+    transform: translate(100px, 0) scale(0.8);
+  }
+}
+
+/* Keep Anchor tier for headers (not affected by scroll) */
+.reveal-anchor-active {
+  transition: opacity 1.5s var(--ease-out-expo),
+    transform 1.5s var(--ease-out-expo),
+    filter 1.5s var(--ease-out-expo);
+  transition-delay: var(--delay, 0s);
+}
+
+.reveal-anchor-from {
+  opacity: 0;
+  transform: translateY(40px);
+  filter: blur(15px);
+}
+
+.reveal-anchor-to {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Simple Fade Transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.8s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+
+/* Grid Adaptive Utility */
+.grid-adaptive {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 30vw, 380px), 1fr));
+  gap: var(--spacer-6);
+}
+
+/* Dynamic Gallery Utilities - Crowdedness Awareness */
+.gallery-low-density {
+  grid-template-columns: repeat(auto-fit, minmax(350px, 450px));
+  justify-content: center;
+  gap: var(--spacer-12);
+}
+
+.gallery-mid-density {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.gallery-high-density {
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--spacer-4);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacer-24: calc(var(--space-unit) * 16);
+  }
+}
