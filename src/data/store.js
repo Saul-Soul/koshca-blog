@@ -138,42 +138,26 @@ export const store = reactive({
     },
     posts: [
         {
-            id: 1,
-            title: "The Genesis of Geometric Minimalism",
-            slug: "geometric-minimalism",
-            date: "2026.01.20",
-            excerpt: "Exploring the mathematical harmony between the Golden Ratio and modern web surfaces.",
-            content: `
-          <p>In the pursuit of timeless design, we often find ourselves returning to the fundamental laws of geometry. This blog's recent redesign isn't just an aesthetic choice; it's a structural realization of the Golden Ratio.</p>
-          <p>By applying a Fibonacci sequence to our border radii and layout proportions, we create an environment that feels organic yet architecturally sound. This is the essence of my current design philosophy.</p>
+            "id": 1,
+            "title": "The First I Write",
+            "slug": "start",
+            "date": "2026.02.23",
+            "excerpt": "这是第一篇帖子, 或许是了解我的第一步",
+            "content": `
+          <p>你好, 旅人.<br>我是Koshca, 有心之人会去寻这意义, 但现在, 看完这篇帖子吧.<br>互联网一定程度上弥补了我的许多缺憾, 而我, 则成了网络的一部分.</p>
+          <p>当以网络为媒介, 我看到了无尽星海, 整个人陷入信息的温暖之中, 以至于差点无法站起来<br>感谢我的天赋, 某方面烂到极致的天赋.<br>游戏, 当年我只是跟风地去玩, 好玩而已, 有人而已. 从未思考如何玩, 或是主动找寻, 或是交流. 像只无头苍蝇般, 又像是打卡上班, 只是为了填补心中一丝空虚而玩.</p>
+          <p>我在学习方面一直被动, 直至至今. 被动地接受环境带来的知识. 我漫无目的地看着电视, 父母看什么, 便看什么, 推荐算法在这起了大作用.<br>特意的信息茧房, 尽是物理知识与工业科技, 现在回想, 这启蒙算是做到位了.<br>得益于不时的&quot;漫无目的&quot;, 以及不适应就放弃的半途而废性格, 我的知识面变得广泛而浅薄. 我想, 我将用后面部分的人生填补他们.</p>
+          <p>好动贯彻至今, 我报以无知无畏的心态.......搞破坏.却也从重建中博学.</p>
+          <p>愿以人生为代价, 充实我的知识.</p>
         `,
-            backgroundImage: "blog_hero_bg_1769832819331.png",
-            aesthetics: {
-                bgOpacity: 0.05,
-                hoverOffset: '-2px',
-                hoverScale: 1.005,
-                glassOpacity: 0.02
+            "backgroundImage": "1233fe85792cfba6ecf41efdea6813b3_0.jpg",
+            "aesthetics": {
+                "bgOpacity": 0.05,
+                "hoverOffset": "-2px",
+                "hoverScale": 1.005,
+                "glassOpacity": 0.02
             },
-            tags: ["Design", "Geometry", "Minimalism"]
-        },
-        {
-            id: 2,
-            title: "Arch Linux: The Root of Precision",
-            slug: "arch-linux-precision",
-            date: "2026.01.15",
-            excerpt: "Why absolute control over your OS environment leads to 100% efficient creative workflows.",
-            content: `
-          <p>Efficiency in music production and photography grading starts with the OS. Arch Linux provides the minimal foundation required to build a focused workstation.</p>
-          <p>No bloat. No background interference. Just pure access to the hardware for low-latency audio processing and color-accurate workflows.</p>
-        `,
-            backgroundImage: "hero_bg.png",
-            aesthetics: {
-                bgOpacity: 0.03,
-                hoverOffset: '-1px',
-                hoverScale: 1.002,
-                motionSpeed: '0.4s'
-            },
-            tags: ["Linux", "Efficiency", "Workstation"]
+            "tags": ["Myself"]
         }
     ],
     galleryHovered: null

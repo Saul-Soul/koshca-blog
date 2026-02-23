@@ -14,7 +14,7 @@ import BaseSection from '../components/ui/BaseSection.vue'
             <h1 class="heading-section mb-8">Thoughts & <span class="text-elegant">Observations</span></h1>
             <div class="divider mb-12"></div>
             <p class="view-intro text-secondary">
-              从设计哲学到技术探索，这里记录了我对数字世界的思考。每一篇文字都是对审美逻辑与功能主义的一次深度探讨。
+              从自我到世界，这里记录了我的思考。
             </p>
           </header>
           
