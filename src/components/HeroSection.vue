@@ -23,7 +23,7 @@ import { store } from '../data/store'
         </p>
         
         <div class="hero-actions">
-          <BaseButton variant="primary" to="/interests">Explore Portfolio</BaseButton>
+          <BaseButton variant="primary" to="/gallery">Explore Photos</BaseButton>
           <BaseButton variant="secondary" to="/about">Curation</BaseButton>
         </div>
       </div>
