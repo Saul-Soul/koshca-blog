@@ -83,7 +83,20 @@ const handleMouseLeave = () => {
   activeId.value = null
   activeSide.value = null
   store.galleryHovered = null
-}
+} 
+
+// Mobile tap activation – mirrors hover behavior
+const handleCardActivate = (item, index) => {
+  if (activeId.value === item.id) {
+    activeId.value = null;
+    activeSide.value = null;
+    store.galleryHovered = null;
+  } else {
+    activeId.value = item.id;
+    activeSide.value = index % 2 === 0 ? 'left' : 'right';
+    store.galleryHovered = item.id;
+  }
+};
 
 const onImageLoad = (id) => { loadedImages[id] = true }
 
@@ -255,7 +268,7 @@ const activeColor = computed(() => {
             '--hover-scale': getHoverScale(item.aspectRatio),
             transitionDelay: `${(index % store.gallery.length) * 0.04}s`
           }"
-          @mouseenter="handleMouseEnter(item, index)"
+          @mouseenter="handleMouseEnter(item, index)" @click="handleMouseEnter(item, index)" @touchend="handleMouseEnter(item, index)"
           @mouseleave="handleMouseLeave"
         >
           <div class="gl-card-content" :class="{ 'is-expanded': activeId === item.id }">
@@ -505,13 +518,14 @@ const activeColor = computed(() => {
 @media (max-width: 860px) {
 .gl-container {
   /* Mobile Scale Constants */
-  --gl-pad: 140px;      
+  --gl-pad-top: 300px;   /* distance to big title */
+  --gl-pad-bottom: 10px; /* reduced bottom empty space */
   --gl-img-h: 170px;
   --gl-dot-margin: 1rem;
   --gl-card-gap: 1.25rem;
   /* Mobile max hover scale is lower (≈2.0), compute height accordingly */
   --max-hover-scale: 2.0;
-  height: calc(var(--gl-img-h) * var(--max-hover-scale) + var(--gl-pad) * 2);
+  height: calc(var(--gl-img-h) * var(--max-hover-scale) + var(--gl-pad-top) + var(--gl-pad-bottom));
 }
 }
 
