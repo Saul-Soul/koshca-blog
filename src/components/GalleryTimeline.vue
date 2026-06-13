@@ -224,7 +224,6 @@ const activeColor = computed(() => {
   return store.gallery.find(i => i.id === activeId.value)?.color ?? 'var(--accent-base)'
 })
 </script>
-
 <template>
   <div 
     class="gl-container" 
@@ -504,16 +503,16 @@ const activeColor = computed(() => {
 }
 
 @media (max-width: 860px) {
-  .gl-container {
-    /* Mobile Scale Constants */
-    --gl-pad: 140px;      
-    --gl-img-h: 170px;
-    --gl-dot-margin: 1rem;
-    --gl-card-gap: 1.25rem;
-    /* Mobile max hover scale is lower (≈2.0), compute height accordingly */
-    --max-hover-scale: 2.0;
-    height: calc(var(--gl-img-h) * var(--max-hover-scale) + var(--gl-pad) * 2);
-  }
+.gl-container {
+  /* Mobile Scale Constants */
+  --gl-pad: 140px;      
+  --gl-img-h: 170px;
+  --gl-dot-margin: 1rem;
+  --gl-card-gap: 1.25rem;
+  /* Mobile max hover scale is lower (≈2.0), compute height accordingly */
+  --max-hover-scale: 2.0;
+  height: calc(var(--gl-img-h) * var(--max-hover-scale) + var(--gl-pad) * 2);
+}
 }
 
 .gl-container::-webkit-scrollbar {
