@@ -18,7 +18,7 @@ export const store = reactive({
             image: '1233fe85792cfba6ecf41efdea6813b3_0.jpg',
             color: '#ffffffa3',
             tags: ['orientation'],
-            aspectRatio: '4/3'
+            aspectRatio: '9/16'
         },
         {
             id: 'orientatal pearl tv tower',
@@ -28,7 +28,7 @@ export const store = reactive({
             image: '05fe51c34d4aa3f438d93aafe86909ac_0.jpg',
             color: '#5a86ffff',
             tags: ['Natural', 'Shanghai', 'Tower'],
-            aspectRatio: '4/3'
+            aspectRatio: '9/16'
         },
         {
             id: 'home',
@@ -38,7 +38,17 @@ export const store = reactive({
             image: 'b088dccd35c802664681d8239397fed5_0.jpg',
             color: '#ffaa00ff',
             tags: ['Natural', 'Shanghai', 'Home'],
-            aspectRatio: '4/3'
+            aspectRatio: '3/4'
+        },
+        {
+            id: 'traveller',
+            title: '旅人',
+            slug: 'travel',
+            desc: '云南等高铁闲时所拍',
+            image: 'Image_1780908786753_87.jpg',
+            color: '#989898ff',
+            tags: ['Yunnan', 'Travel'],
+            aspectRatio: '21/9'
         },
         {
             id: 'walkway',
@@ -48,7 +58,7 @@ export const store = reactive({
             image: 'fea41d420b071280dbe8683d91ecf7cb_0.jpg',
             color: '#fe9800cc',
             tags: ['Natural', 'Shanghai', 'Park'],
-            aspectRatio: '4/3'
+            aspectRatio: '3/4'
         },
         {
             id: '1',
@@ -58,7 +68,7 @@ export const store = reactive({
             image: 'Koshca_20250524_095641082.jpg',
             color: '#ffffffa3',
             tags: ['Natural', 'Shanghai', 'Park'],
-            aspectRatio: '4/3'
+            aspectRatio: '3/4'
         },
         {
             id: 'music',
@@ -68,7 +78,7 @@ export const store = reactive({
             image: '56789013771672e92e1264d045852a8c_720.jpg',
             color: '#c084fc',
             tags: ['Natural', 'Shanghai'],
-            aspectRatio: '1/1'
+            aspectRatio: '16/9'
         },
         {
             id: 'photography',
@@ -78,7 +88,7 @@ export const store = reactive({
             image: '20251122142349.png',
             color: '#3ebffff3',
             tags: ['Game', '鸣潮'],
-            aspectRatio: '4/5'
+            aspectRatio: '8/5'
         },
         {
             id: '2',
@@ -88,7 +98,7 @@ export const store = reactive({
             image: 'IMG_20260204_131553.png',
             color: '#ff4147ff',
             tags: ['Game', '鸣潮'],
-            aspectRatio: '16/9'
+            aspectRatio: '2.35/1'
         },
         {
             id: 'Flow',
@@ -98,7 +108,7 @@ export const store = reactive({
             image: 'Image_1766862224353.jpg',
             color: '#3c8dffff',
             tags: ['Game', '鸣潮'],
-            aspectRatio: '1/1'
+            aspectRatio: '16/9'
         },
         {
             id: 'Shanghai',
@@ -108,7 +118,7 @@ export const store = reactive({
             image: 'HDR_20260128_140206.jpg',
             color: '#cbfff7ff',
             tags: ['Shanghai', 'City'],
-            aspectRatio: '16/9'
+            aspectRatio: '9/16'
         },
         {
             id: 'Lab',
@@ -129,7 +139,57 @@ export const store = reactive({
             color: '#6b93ffff',
             tags: ['Lab', 'Experiment'],
             aspectRatio: '16/9'
-        }
+        },
+        {
+            id: 'Moon',
+            title: 'Lunar',
+            slug: 'Lunar',
+            desc: '',
+            image: 'IMG_20260529_190258.jpg',
+            color: '#989898ff',
+            tags: ['Home'],
+            aspectRatio: '3/4'
+        },
+        {
+            id: 'tower',
+            title: '金茂大厦',
+            slug: 'Shanghai',
+            desc: '',
+            image: 'IMG_20260606_180540 (3).jpg',
+            color: '#fff153ff',
+            tags: ['Shanghai'],
+            aspectRatio: '3/4'
+        },
+        {
+            id: 'light',
+            title: '光',
+            slug: 'Shanghai',
+            desc: '',
+            image: 'IMG_20260606_172624.jpg',
+            color: '#ffffffff',
+            tags: ['Shanghai'],
+            aspectRatio: '3/4'
+        },
+        {
+            id: 'LUJIAZUI',
+            title: '陆家嘴灯火',
+            slug: 'Shanghai',
+            desc: '',
+            image: 'IMG_20260606_191032 (1).jpg',
+            color: '#74d0fbff',
+            tags: ['Shanghai'],
+            aspectRatio: '3/4'
+        },
+        {
+            id: 'LUJIAZUI_2',
+            title: '迷途',
+            slug: 'Shanghai',
+            desc: '',
+            image: 'IMG_20260606_203341.jpg',
+            color: '#fbc974ff',
+            tags: ['Shanghai'],
+            aspectRatio: '3/4'
+        },
     ],
     config: {
         theme: 'Elegant Dark',
