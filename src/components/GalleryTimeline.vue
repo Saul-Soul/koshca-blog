@@ -28,7 +28,13 @@ const speed = 0.6 // Speed of automatic slow scroll (pixels/frame)
 
 // Touch interaction states
 let startX = 0
+let startY = 0
+let touchMoved = false
 const isInteracting = ref(false)
+const touchMoveThreshold = 8 // Minimum movement to trigger scroll/clear
+
+// 检测是否为移动端/触摸设备
+const isMobileDevice = ref(false)
 
 // Calculate float ratio value from fraction string (e.g. '16/9' -> 1.777)
 const getAspectRatioValue = (ratioStr) => {
@@ -43,7 +49,6 @@ const getAspectRatioValue = (ratioStr) => {
 }
 
 // Dynamically compute optimal scale values based on image aspect ratio
-// Maximized scale coefficients to deliver cinematic full-detail HD previews without clipping
 const getHoverScale = (ratioStr) => {
   const val = getAspectRatioValue(ratioStr)
   if (val < 0.75) {
@@ -72,7 +77,11 @@ const handleScrollActive = () => {
   }, 200) // Re-enable hover 200ms after scrolling stops
 }
 
-const handleMouseEnter = (item, index) => {
+// 桌面端鼠标悬停处理
+const handleMouseEnter = (item, index, event) => {
+  // 移动端忽略鼠标悬停事件（避免触摸时误触发）
+  if (isMobileDevice.value) return
+  
   if (isScrolling.value || isInteracting.value) return
   activeId.value = item.id
   activeSide.value = index % 2 === 0 ? 'left' : 'right'
@@ -80,18 +89,28 @@ const handleMouseEnter = (item, index) => {
 }
 
 const handleMouseLeave = () => {
+  // 移动端忽略鼠标离开事件
+  if (isMobileDevice.value) return
+  
   activeId.value = null
   activeSide.value = null
   store.galleryHovered = null
 } 
 
-// Mobile tap activation – mirrors hover behavior
-const handleCardActivate = (item, index) => {
+// 移动端触摸激活/取消激活（toggle模式，完全复用hover缩放逻辑）
+const handleMobileActivate = (item, index) => {
+  if (!isMobileDevice.value) return
+  
+  // 滚动过程中不允许激活
+  if (isScrolling.value) return
+  
   if (activeId.value === item.id) {
+    // 已激活则关闭
     activeId.value = null;
     activeSide.value = null;
     store.galleryHovered = null;
   } else {
+    // 激活新卡片
     activeId.value = item.id;
     activeSide.value = index % 2 === 0 ? 'left' : 'right';
     store.galleryHovered = item.id;
@@ -111,31 +130,44 @@ const onWheel = (e) => {
   targetScrollLeft += e.deltaY * 0.85
 }
 
-// Touch controls for mobile / touch screens
+// 优化的触摸控制：区分轻触和滑动
 const onTouchStart = (e) => {
   if (e.touches.length > 0) {
     startX = e.touches[0].clientX
+    startY = e.touches[0].clientY
+    touchMoved = false
     isInteracting.value = true
-    handleScrollActive()
+    // 不在此处清除 activeId，等待滑动时再清除
   }
 }
 
 const onTouchMove = (e) => {
   if (!isInteracting.value || e.touches.length === 0) return
   
-  // Active dragging exits zoom
-  handleScrollActive()
-  
   const currentX = e.touches[0].clientX
-  const deltaX = currentX - startX
+  const currentY = e.touches[0].clientY
+  const deltaX = Math.abs(currentX - startX)
+  const deltaY = Math.abs(currentY - startY)
   
-  // Apply drag offset dynamically to target (1.25 factor for high responsiveness)
-  targetScrollLeft -= deltaX * 1.25
-  startX = currentX
+  // 超过阈值才视为滚动/拖动，并清除激活状态
+  if (!touchMoved && (deltaX > touchMoveThreshold || deltaY > touchMoveThreshold)) {
+    touchMoved = true
+    // 用户开始滚动，退出缩放状态
+    handleScrollActive()
+  }
+  
+  if (touchMoved) {
+    // Apply drag offset dynamically to target
+    const deltaXTotal = currentX - startX
+    targetScrollLeft -= deltaXTotal * 1.25
+    startX = currentX
+    startY = currentY
+  }
 }
 
 const onTouchEnd = () => {
   isInteracting.value = false
+  touchMoved = false
 }
 
 // Unified frame-by-frame animation tick
@@ -207,7 +239,17 @@ const handleResize = () => {
   }
 }
 
+// 检测设备类型
+const detectMobile = () => {
+  // 使用指针精度检测触摸设备
+  const isTouch = window.matchMedia('(pointer: coarse)').matches || 
+                  ('ontouchstart' in window) || 
+                  (navigator.maxTouchPoints > 0)
+  isMobileDevice.value = isTouch
+}
+
 onMounted(() => {
+  detectMobile()
   isRevealed.value = true
   
   nextTick(() => {
@@ -219,6 +261,8 @@ onMounted(() => {
   })
   
   window.addEventListener('resize', handleResize)
+  // 监听设备变化（例如设备方向改变导致指针能力变化）
+  window.matchMedia('(pointer: coarse)').addEventListener('change', detectMobile)
 })
 
 onUnmounted(() => {
@@ -229,6 +273,7 @@ onUnmounted(() => {
     clearTimeout(scrollTimeout)
   }
   window.removeEventListener('resize', handleResize)
+  window.matchMedia('(pointer: coarse)').removeEventListener('change', detectMobile)
 })
 
 // Calculate active accent color for timeline spine
@@ -237,6 +282,7 @@ const activeColor = computed(() => {
   return store.gallery.find(i => i.id === activeId.value)?.color ?? 'var(--accent-base)'
 })
 </script>
+
 <template>
   <div 
     class="gl-container" 
@@ -268,8 +314,9 @@ const activeColor = computed(() => {
             '--hover-scale': getHoverScale(item.aspectRatio),
             transitionDelay: `${(index % store.gallery.length) * 0.04}s`
           }"
-          @mouseenter="handleMouseEnter(item, index)" @click="handleMouseEnter(item, index)" @touchend="handleMouseEnter(item, index)"
+          @mouseenter="handleMouseEnter(item, index, $event)"
           @mouseleave="handleMouseLeave"
+          @click="handleMobileActivate(item, index)"
         >
           <div class="gl-card-content" :class="{ 'is-expanded': activeId === item.id }">
             
@@ -345,8 +392,9 @@ const activeColor = computed(() => {
             '--hover-scale': getHoverScale(item.aspectRatio),
             transitionDelay: `${(index % store.gallery.length) * 0.04}s`
           }"
-          @mouseenter="handleMouseEnter(item, index)"
+          @mouseenter="handleMouseEnter(item, index, $event)"
           @mouseleave="handleMouseLeave"
+          @click="handleMobileActivate(item, index)"
         >
           <div class="gl-card-content" :class="{ 'is-expanded': activeId === item.id }">
             
@@ -421,8 +469,9 @@ const activeColor = computed(() => {
             '--hover-scale': getHoverScale(item.aspectRatio),
             transitionDelay: `${(index % store.gallery.length) * 0.04}s`
           }"
-          @mouseenter="handleMouseEnter(item, index)"
+          @mouseenter="handleMouseEnter(item, index, $event)"
           @mouseleave="handleMouseLeave"
+          @click="handleMobileActivate(item, index)"
         >
           <div class="gl-card-content" :class="{ 'is-expanded': activeId === item.id }">
             
@@ -485,7 +534,7 @@ const activeColor = computed(() => {
 </template>
 
 <style scoped>
-/* ─── Responsive Dimension CSS Variables ─── */
+/* ─── Responsive Dimension CSS Variables (保持不变) ─── */
 .gl-container {
   --ease: cubic-bezier(0.25, 1, 0.5, 1);
   --t: 0.6s;
